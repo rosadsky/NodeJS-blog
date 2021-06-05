@@ -1,25 +1,11 @@
 <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Node.js Crash Course</title>
-    </head>
+    <%- include('./partial/head.ejs') %> 
     <body>
-        <nav>
-            <div class="site-title">
-                <a href="/"><h1>Blog Ninja | <%= title %></h1></a>
-                <p>A Net ninja site</p>
-            </div>
-            <ul>
-                <li><a href="/">Blogs</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/blogs/create">New Blog</a></li>
-            </ul>
-        </nav>
-    
+      <%- include('./partial/nav.ejs') %>    
         <div class="about-content">
             <h2>About Us</h2>
             <p>Lorem ipsum dolo, sit amet consetetur adipisicing elit.</p>
         </div>
+        <%- include('./partial/footer.ejs') %> 
     </body>
-    </html
+    </html>
