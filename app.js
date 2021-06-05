@@ -38,6 +38,10 @@ app.get('/about-us', (req, res) => {
 })
 
 
+app.get('/blogs/create', (req, res) => {
+    res.render('create');
+})
+
 //404 page
 
 app.use((req,res) => {
