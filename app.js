@@ -12,6 +12,9 @@ const app = express();
 app.set('view engine', 'ejs');
 app.listen(3000);
 
+//midlware and statici file
+
+app.use(express.static('public'));
 
 app.use(morgan('tiny'));
 
