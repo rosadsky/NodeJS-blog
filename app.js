@@ -1,7 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const Blog = require('./models/blog')
+const Blog = require('./models/blog');
+const { BlockList } = require('net');
 
 //express app
 
@@ -23,6 +24,7 @@ app.listen(3000);
 //midlware and statici file
 
 app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 
 
@@ -60,6 +62,20 @@ app.get('/blogs', (req, res) => {
         })
 })
  
+app.post('/blogs', (req, res) => {
+    //console.log(req.body);
+
+    const blog = new Blog(req.body);
+
+    blog.save()
+        .then((result) =>{
+            res.redirect('/blogs');
+        })
+        .catch((err) =>{
+            console.log(err)
+        })
+
+})
 
 app.get('/blogs/create', (req, res) => {
     res.render('create', { title: 'Create blog'});
