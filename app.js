@@ -1,9 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
+
 //express app
 
 const app = express();
 
+//connet to mongoDB
+const dbURI = 'mongodb+srv://romanoff:test123@cluster0.rk4xs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+ 
 //listen fo request
 
 
@@ -14,7 +18,8 @@ app.listen(3000);
 
 //midlware and statici file
 
-app.use(express.static('public'));
+app.use(express.static('public'))
+
 
 app.use(morgan('tiny'));
 
