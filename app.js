@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Blog = require('./models/blog');
 const { BlockList } = require('net');
+const { render } = require('ejs');
 
 //express app
 
@@ -76,6 +77,18 @@ app.post('/blogs', (req, res) => {
         })
 
 })
+
+app.get('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    Blog.findById(id)
+        .then((result) => {
+            res.render('details', {blog: result, title: 'Blog Details'});
+        })
+        .catch((err) =>{
+            console.log(err);
+        });
+});
 
 app.get('/blogs/create', (req, res) => {
     res.render('create', { title: 'Create blog'});
