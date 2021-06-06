@@ -26,55 +26,10 @@ app.use(express.static('public'))
 app.use(morgan('tiny'));
 
 
-app.get('/add-blog', (req, res) => {
-    const blog = new Blog({
-        title: 'new blog 2',
-        snippet: 'about new vlog',
-        body: 'more about my new blog'
-    });
-
-    blog.save()
-        .then((result) =>{
-            res.send(result);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-})
-
-app.get('/all-blogs', (req, res) => {
-    Blog.find()
-        .then((result) => {
-            res.send(result);
-        })
-        .catch((err) =>{
-            console.log(err);
-        })
-
-});
-
-
-app.get('/single-blog', (req, res) => {
-    Blog.findById('60bd24fa7460104cb57d979e')
-        .then(result =>{
-            res.send(result);
-        } )
-        .catch((err) => {
-            console.log(err);
-        })
-})
 
 
 app.get('/', (req, res) => {
-    const blogs = [
-        {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'},
-        {title: 'Mario fins starts', snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing'},
-        {title: 'How to defeat Mario', snippet: 'Lorem ipsum dolor sit amet, consectetur adipiscing'},
-    ];
-
-    //res.send('<p> Home page </p>');
-    //res.sendFile('./views/index.html',{ root: __dirname })
-    res.render('index', { title: 'Home', blogs: blogs });
+    res.redirect('/blogs')
     
 } );
 
@@ -90,6 +45,19 @@ app.get('/about', (req, res) => {
 app.get('/about-us', (req, res) => {
     //res.redirect('/about');
     res.render('about', { title: 'About'});
+})
+
+//blog router
+
+app.get('/blogs', (req, res) => {
+    Blog.find().sort( {createdAt: -1})
+        .then((result) => {
+            res.render('index', {title: 'All Blogs', blogs: result})
+
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 })
  
 
