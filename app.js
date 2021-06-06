@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const Blog = require('./models/blog')
 
 //express app
 
@@ -22,9 +23,47 @@ app.listen(3000);
 //midlware and statici file
 
 app.use(express.static('public'))
-
-
 app.use(morgan('tiny'));
+
+
+app.get('/add-blog', (req, res) => {
+    const blog = new Blog({
+        title: 'new blog 2',
+        snippet: 'about new vlog',
+        body: 'more about my new blog'
+    });
+
+    blog.save()
+        .then((result) =>{
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
+app.get('/all-blogs', (req, res) => {
+    Blog.find()
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) =>{
+            console.log(err);
+        })
+
+});
+
+
+app.get('/single-blog', (req, res) => {
+    Blog.findById('60bd24fa7460104cb57d979e')
+        .then(result =>{
+            res.send(result);
+        } )
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
 
 app.get('/', (req, res) => {
     const blogs = [
